@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/template/modeloSistema.xhtml">
+
+	<ui:define name="title">Fornecedores</ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menu.xhtml" />
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:growl id="teste" showDetail="true" life="3000"/>
+			
+			<p:commandButton actionListener="#{MBFornecedores.teste()}" value="Teste" update="teste"/>
+		
+			<p:messages showDetail="false" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+			
+			<!-- 	INICIO DATATABLE -->
+			
+			<p:dataTable  id="dt_Formulario" resizableColumns="false"
+				resizeMode="true" paginator="true" rows="8"
+				emptyMessage="Nenhum Registro Encontrado..."
+				value="#{MBFornecedores.itens}" var="item" styleClass="paginated">
+				
+				<f:facet name="header">
+       				Cadastro
+    			</f:facet>
+    			
+				<p:column style="text-align: center;" width="100"
+					headerText="Codigo" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+				<p:column headerText="Descrição" filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+				<p:column width="100" headerText="Ações">
+					<p:commandButton
+						actionListener="#{MBFornecedores.prepararExcluir()}"
+						oncomplete="PF('d_excluir').show();" icon="ui-icon-trash" />
+						<p:commandButton
+						
+						 icon="ui-icon-pencil" />
+				</p:column>
+				<f:facet name="footer">
+			<p:commandButton update=":form_Grid:pnl_grid" value="Inserir"
+			oncomplete="PF('dialo').show();"
+			actionListener="#{MBFornecedores.novo()}" />
+			
+			
+			</f:facet>
+				
+			</p:dataTable>
+			
+		</h:form>
+		
+		<!-- 	FIM DATATABLE -->
+
+		<!-- 	PAINEL DE GRAVAR DESCRIÇÃO -->
+		
+		<p:dialog showEffect="explode" hideEffect="explode" header="Cadastrar" modal="true" appendTo="@(body)"
+			style="width:50px;" widgetVar="dialo" resizable="false"
+			closable="false" draggable="false">
+			<h:form id="form_Grid">
+				<p:panelGrid id="pnl_grid" columns="2">
+					<h:outputLabel value="Descarição" />
+
+					<p:inputText required="true"
+						requiredMessage="O campo não pode ser Vazio!" size="50"
+						maxlength="30" value="#{MBFornecedores.fornecedores.descricao}">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+
+				</p:panelGrid>
+				
+				<p:panelGrid columns="2">
+					<p:commandButton icon="ui-icon-document" value="Salvar"
+						actionListener="#{MBFornecedores.salvar()}"
+						update=":form:dt_Formulario" oncomplete="PF('dialo').hide();" />
+						
+					<p:commandButton value="Fechar" onclick="PF('dialo').hide();" />
+				</p:panelGrid>
+			</h:form>
+			
+		</p:dialog>
+		
+		
+			
+		<!-- FIM PAINEL DE GRAVAR DESCRIÇÃO -->
+
+		<!-- PAINEL PARA EXCLUIR -->
+
+		<p:dialog showEffect="explode" hideEffect="explode" resizable="false" widgetVar="d_excluir" closable="false"
+			draggable="false" modal="true" appendTo="@(body)">
+			<h:form id="frm_excluir">
+			
+				<p:panelGrid columns="2" id="pnl_excluir">
+
+					<h:outputText value="Código" />
+					<h:outputText value="#{MBFornecedores.fornecedores.codigo}" />
+					<h:outputText value="Descrição" />
+					<h:outputText value="#{MBFornecedores.fornecedores.descricao}" />
+
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+				
+					<p:commandButton icon="ui-icon-trash" value="Excluir"
+						actionListener="#{MBFornecedores.excluir(codigo)}"
+						update=":form:dt_Formulario"
+						oncomplete="PF('d_excluir').hide();" />
+					<p:commandButton  value="Fechar" onclick="PF('d_excluir').hide();" />
+
+				</p:panelGrid>
+
+			</h:form>
+		</p:dialog>
+		
+		<!-- 		FIM PAINEL PARA EXCLUIR -->
+		
+	</ui:define>
+</ui:composition>
