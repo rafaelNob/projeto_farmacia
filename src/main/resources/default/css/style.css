@@ -1,4 +1,16 @@
-body{
-	
-	background: red;
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;;
 }
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}	
+
+/*=========== LOGIN==========*/
+#login_formulario{
+				
+				width: 375px;
+				margin: 200px auto;
+}
+
