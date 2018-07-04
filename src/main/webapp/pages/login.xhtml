@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+<h:head>
+        <title>login</title>
+        <h:outputStylesheet library="default" name="css/style.css"/>
+        <style>
+        	.lpa{
+					background: url("#{resource['default/img/bg_login.jpg']}") no-repeat center center;
+					background-size: cover;
+}
+        
+        </style>
+    </h:head>
+    <h:body styleClass="lpa">
+    <div style="position: absolute; top: 10px; left: 40px;">
+      <h:graphicImage width="100" library="default" name="img/logo02.png" />
+    </div>
+  	
+    <div id="login_formulario">
+   
+        <h:form id="loginForm"> 
+         <p:focus for="username"/>         
+            <p:growl id="msg"  life="3000" />
+            <p:panel  header="Login" style="width: 360px;">
+ 		
+                <h:panelGrid id="loginPanel" columns="2">
+ 					
+                    <h:outputText value="Username" />
+                    <p:inputText maxlength="15" required="true" requiredMessage="O campo Usuario Obrigatório! " id="username"  />
+                    <p:spacer/>
+ 
+                    <p:message for="username" />
+ 
+                    <h:outputText value="Password" />
+ 
+                    <p:password  id="password"  feedback="false"/>
+ 
+                    <p:spacer></p:spacer>
+ 
+                    <p:message for="password"/>
+ 
+                    <p:spacer></p:spacer>
+ 					    <p:commandButton value="Login" update="loginForm" ajax="true"/>
+ 					
+                
+ 
+                </h:panelGrid>
+ 
+            </p:panel>
+ 
+        </h:form>
+ </div>
+    </h:body> 
+ 
+</html>
